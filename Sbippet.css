@@ -1,0 +1,283 @@
+/* Text gradient */
+.purple-gradient h2 {
+    background: -webkit-gradient(linear, left top, right top, color-stop(7.91%, #261931), color-stop(89%, #5E4473));
+    background: -o-linear-gradient(left, #261931 7.91%, #5E4473 89%);
+    background: linear-gradient(90deg, #261931 7.91%, #5E4473 89%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+}
+
+/* Border gradient */
+.featured-border .elementor-widget-container {
+    position: relative;
+}
+
+.featured-border .elementor-widget-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 30px; 
+  padding: 10px; 
+  background:linear-gradient(180deg,#729803,#000000
+); 
+  -webkit-mask: 
+     linear-gradient(#fff 0 0) content-box, 
+     linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+          z-index: 10;
+}
+
+/* slick header footer*/
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A==" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js" integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js" integrity="sha512-IsNh5E3eYy3tr/JiX2Yx4vsCujtkhwl7SLqgnwLNgf04Hrt9BT9SXlLlZlWx+OK4ndzAoALhsMNcCmkggjZB1w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+    jQuery(function ($) {
+        $(document).ready(function () {
+            $('.google_review-slide .google_review-wrap').slick({
+                slidesToShow: 3,
+                slidesToScroll: 1,
+                arrows: false,
+                dots: true,
+                autoplay: false,
+                autoplaySpeed: 5000,
+                pauseOnHover: true,
+                variableWidth: true,
+                nextArrow: $('.podcast-next'),
+                prevArrow: $('.podcast-prev'),
+                responsive: [{
+                    breakpoint: 767,
+                    settings: {
+                        slidesToShow: 3,
+                    }
+                }]
+            });
+        });
+    });
+</script>
+
+/* custom post type */
+?>
+<?php
+add_shortcode( 'google_review', 'google_review_shortcode' );
+function google_review_shortcode( $atts ) {
+   ob_start();
+
+// define attributes and their defaults
+   $parameters = shortcode_atts( array(
+       'type' => 'google_review',
+       'order' => 'desc',
+       'orderby' => 'date',
+       'post_num' => -1,
+	    'category' => '',
+   ), $atts );
+
+   $options = array(
+       'post_type' => $parameters['type'],
+       'order' => $parameters['order'],
+       'orderby' => $parameters['orderby'],
+       'posts_per_page' => $parameters['post_num'],
+	    'google_review_categories' => $parameters['category'],
+   );
+
+   $query = new WP_Query( $options );
+
+if ( $query->have_posts() ) { ?>
+
+
+<div class="google_review-wrap">
+     <?php while ( $query->have_posts() ) : $query->the_post();
+
+	   $google_review_id = get_the_ID();
+      $google_review_permalink = get_the_permalink();
+      $google_review_title = get_the_title();
+      $google_review_excerpt = get_the_content();
+      $google_review_thumbnail = get_the_post_thumbnail_url($post->ID, 'full');
+	   $google_review_comma = get_field('comma');
+	   $google_review_star = get_field('star');
+       ?>
+           <div class="google_review-item">
+                  <div class="review-content id-<?php echo $google_review_id; ?>">
+					   <div class="google-review-top">
+						   <img src="/wp-content/uploads/2023/07/comma.png" class="comma">
+							<img src="/wp-content/uploads/2023/07/stars.png" class="star">
+						   <img src="<?php echo $google_review_thumbnail; ?>" alt="<?php echo $google_review_title; ?>" class="thumbnail">
+					   </div>
+					  
+						<div class="google-review-content">
+							<?php echo $google_review_excerpt;?>
+						</div>
+                  </div>
+					<h2 class="google-review-name"><?php echo $google_review_title; ?></h2>
+           </div>
+
+
+			
+     <?php endwhile;
+     wp_reset_postdata(); ?>
+</div>
+<?php
+       $output = ob_get_clean();
+       return $output;
+   }
+}
+
+/* ______________________________________________________________________________________________________________________ */
+.contact-form .gform_body input:focus::placeholder,
+.contact-form .gform_body textarea:focus::placeholder {
+  opacity: 0 !important;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: #868686 !important;
+}
+/* placeholder and fucos */
+
+.text-02 p:not(:last-child){
+    padding-bottom:2%;
+}
+/* elementor text add and reduce space  */
+
+<script>
+	// Add this above the script.js
+	var tel_inputs = [];
+
+	jQuery(document).ready(function () {
+
+		jQuery('body').on('keyup', '.influex-tel-fmt', function () {
+			// Number Only
+			if (/\D/g.test(this.value)) {
+				// Filter non-digits from input value.
+				this.value = this.value.replace(/\D/g, '');
+			}
+
+			// Pass the formatted value to the original phone field
+			var id = jQuery(this).data('intl-tel-input-id');
+			var phone_no = tel_inputs[id].getNumber();
+			jQuery(this).closest('.iti').prev().val(phone_no).trigger('change');
+
+			console.log(phone_no);
+		});
+
+		jQuery('body').on('click', '.iti__country-list .iti__country', function () {
+			// Pass the formatted value to the original phone field
+			var id = jQuery(this).closest('.iti__flag-container').next().data('intl-tel-input-id');
+			var phone_no = tel_inputs[id].getNumber();
+			jQuery(this).closest('.iti').prev().val(phone_no).trigger('change');
+
+			console.log(phone_no);
+		});
+
+	});
+
+	function initTelInput() {
+
+		var ctr = 0;
+		jQuery('.influex-tel').each(function () {
+
+			var obj = jQuery(this);
+
+			if (!obj.hasClass('intl-done')) {
+
+				//var gfield = jQuery('input[type="tel"]', obj);
+				var gfield = jQuery('.ginput_container_phone > input', obj);
+				if ( gfield.length ) {
+					var placeholder = gfield.attr('placeholder'); // Enable for placeholder
+					//var value = gfield.val();
+
+					jQuery('.ginput_container', obj).append('<input type="tel" placeholder="' + placeholder +
+					'" data-id="' + ctr + '" class="influex-tel-fmt" />');
+
+				} else {
+					gfield = jQuery('input', obj);
+					var placeholder = gfield.attr('placeholder'); // Enable for placeholder
+					//var value = gfield.val();
+
+					obj.append('<input type="tel" placeholder="' + placeholder +
+					'" data-id="' + ctr + '" class="influex-tel-fmt" />');
+				}
+
+				gfield.hide();
+				
+				setTimeout(() => {
+					var input = obj.find('.influex-tel-fmt')[0];
+					tel_inputs.push(
+						intlTelInput(input, {
+							separateDialCode: true
+						})
+					);
+
+					ctr++;
+				}, 500);
+
+				obj.addClass('intl-done');
+
+			}
+
+		});
+
+	}
+
+	jQuery(document).on('gform_post_render', function (event, form_id, current_page) {
+
+		initTelInput();
+
+	});
+
+	// Listening popup show event
+	window.addEventListener( 'elementor/popup/show', ( event )=>{
+
+		const id = event.detail.id;
+		const instance = event.detail.instance;
+
+		console.log( 'elementor/popup/show' );
+
+		setTimeout(() => {
+			initTelInput();
+		}, 500);
+
+	})
+
+</script>
+
+/* Footer Script Global Phone */
+
+.influex-tel .iti {
+    width: 100%;
+}
+.contributors-form .gform_body input.influex-tel-fmt {
+    padding-left: 90px !important;
+    width: 100%;
+}
+
+/* global phone css */
+
+@media only screen and (min-width: 1025px) {
+    .fluid-section .elementor-container {
+     width: 80%;
+    }
+   
+    .fluid-section .elementor-inner-section .elementor-container,
+    .fluid-section .elementor-widget-popup .elementor-container {
+     width: 100%;
+    }
+   
+    .fluid-row .elementor-container {
+     width: 70%;
+    }
+   
+    .fluid-row .elementor-inner-section .elementor-container,
+    .fluid-row .elementor-widget-popup .elementor-container {
+     width: 100%;
+    }
+   }
+
+/* Container layout */
+
